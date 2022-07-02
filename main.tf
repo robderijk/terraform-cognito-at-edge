@@ -1,25 +1,3 @@
-//terraform {
-//  backend "remote" {
-//    hostname     = "app.terraform.io"
-//    organization = "harborn-scrum-dashboard"
-//
-//    workspaces {
-//      name = "sprint-scout-server"
-//    }
-//  }
-//  required_providers {
-//    aws = {
-//      source  = "hashicorp/aws"
-//      version = ">= 4.9"
-//    }
-//  }
-//}
-
-// TODO: Thois should probably be moved away if this is a module.
-provider "aws" {
-  region = "eu-west-1"
-}
-
 data "aws_region" "current" {}
 
 module "lambda_at_edge" {
