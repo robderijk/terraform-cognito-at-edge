@@ -1,5 +1,10 @@
 data "aws_region" "current" {}
 
+provider "aws" {
+  region = "us-east-1"
+  alias = "us-east-1"
+}
+
 module "lambda_at_edge" {
   source = "terraform-aws-modules/lambda/aws"
 
@@ -9,6 +14,10 @@ module "lambda_at_edge" {
   description   = "Cognito authentication made easy to protect your website with CloudFront and Lambda@Edge."
   handler       = "src/index.handler"
   runtime       = "nodejs14.x"
+
+  providers = {
+    aws = aws.us-east-1
+  }
 
   source_path = [
     {
