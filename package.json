@@ -1,0 +1,11 @@
+{
+  "name": "terraform-cognito-at-edge",
+  "version": "1.0.0",
+  "description": "Cognito authentication made easy to protect your website with CloudFront and Lambda@Edge.",
+  "main": "src/index.js",
+  "scripts": {},
+  "author": "Rob de Rijk",
+  "dependencies": {
+    "cognito-at-edge": "^1.2.2"
+  }
+}
