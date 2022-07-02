@@ -117,7 +117,7 @@ module "cdn" {
         },
         {
           name  = "x-user-pool-domain"
-          value = aws_cognito_user_pool_domain.main.domain
+          value = "${aws_cognito_user_pool_domain.main.domain}.auth.${data.aws_region.current.name}.amazoncognito.com"
         }
       ]
     }
