@@ -19,13 +19,6 @@ module "lambda_at_edge" {
     aws = aws.us-east-1
   }
 
-  allowed_triggers = {
-    AllowExecutionFromCloudfront = {
-      service = "edgelambda.amazonaws.com"
-      arn     = module.cdn.cloudfront_distribution_arn
-    }
-  }
-
   source_path = [
     {
       path = path.module,
