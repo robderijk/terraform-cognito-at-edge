@@ -12,7 +12,7 @@ module "lambda_at_edge" {
 
   source_path = [
     {
-      path = "./",
+      path = path.module,
       commands = [
         "npm install",
         ":zip"
