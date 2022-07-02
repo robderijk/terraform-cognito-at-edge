@@ -85,6 +85,28 @@ data "aws_iam_policy_document" "s3_bucket_policy" {
   }
 }
 
+data "aws_canonical_user_id" "current" {}
+
+module "log_bucket" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "~> 2.0"
+
+  bucket = "logs-static-hosting-cdn"
+  acl    = null
+  grant = [{
+    type        = "CanonicalUser"
+    permissions = ["FULL_CONTROL"]
+    id          = data.aws_canonical_user_id.current.id
+  }, {
+    type        = "CanonicalUser"
+    permissions = ["FULL_CONTROL"]
+    id          = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
+    # Ref. https://github.com/terraform-providers/terraform-provider-aws/issues/12512
+    # Ref. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
+  }]
+  force_destroy = true
+}
+
 module "cdn" {
   source = "terraform-aws-modules/cloudfront/aws"
 
@@ -94,6 +116,11 @@ module "cdn" {
   create_origin_access_identity = true
   origin_access_identities = {
     s3_bucket = "CloudFront can access S3 bucket"
+  }
+
+  logging_config = {
+    bucket = module.log_bucket.s3_bucket_bucket_domain_name
+    prefix = "cloudfront"
   }
 
   origin = {
