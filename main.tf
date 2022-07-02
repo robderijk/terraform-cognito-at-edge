@@ -33,13 +33,6 @@ module "lambda_at_edge" {
       ]
     }
   ]
-
-  environment_variables = {
-    USER_POOL_REGION        = data.aws_region.current.name
-    USER_POOL_ID            = aws_cognito_user_pool.default.id
-    USER_POOL_APP_CLIENT_ID = aws_cognito_user_pool_client.default.id
-    USER_POOL_DOMAIN        = aws_cognito_user_pool.default.domain
-  }
 }
 
 module "s3_bucket" {
@@ -109,6 +102,24 @@ module "cdn" {
       s3_origin_config = {
         origin_access_identity = "s3_bucket" # key in `origin_access_identities`
       }
+      custom_header = [
+        {
+          name  = "x-user-pool-region"
+          value = data.aws_region.current.name
+        },
+        {
+          name  = "x-user-pool-id"
+          value = aws_cognito_user_pool.default.id
+        },
+        {
+          name  = "x-user-pool-app-client-id"
+          value = aws_cognito_user_pool_client.default.id
+        },
+        {
+          name  = "x-user-pool-domain"
+          value = aws_cognito_user_pool.default.domain
+        }
+      ]
     }
   }
 

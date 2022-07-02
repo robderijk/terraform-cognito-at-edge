@@ -2,10 +2,10 @@ const { Authenticator } = require('cognito-at-edge');
 
 const authenticator = new Authenticator({
   // Replace these parameter values with those of your own environment
-  region: process.env.USER_POOL_REGION, // user pool region
-  userPoolId: process.env.USER_POOL_ID, // user pool ID
-  userPoolAppId: process.env.USER_POOL_APP_CLIENT_ID, // user pool app client ID
-  userPoolDomain: process.env.USER_POOL_DOMAIN, // user pool domain
+  region: request.origin.s3.customHeaders["x-user-pool-region"][0].value, // user pool region
+  userPoolId: request.origin.s3.customHeaders["x-user-pool-id"][0].value, // user pool ID
+  userPoolAppId: request.origin.s3.customHeaders["x-user-pool-app-client-id"][0].value, // user pool app client ID
+  userPoolDomain: request.origin.s3.customHeaders["x-user-pool-domain"][0].value, // user pool domain
 });
 
 exports.handler = async (request) => authenticator.handle(request);
