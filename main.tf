@@ -2,7 +2,7 @@ data "aws_region" "current" {}
 
 provider "aws" {
   region = "us-east-1"
-  alias = "us-east-1"
+  alias  = "us-east-1"
 }
 
 module "lambda_at_edge" {
@@ -17,6 +17,13 @@ module "lambda_at_edge" {
 
   providers = {
     aws = aws.us-east-1
+  }
+
+  allowed_triggers = {
+    AllowExecutionFromCloudfront = {
+      service = "edgelambda.amazonaws.com"
+      arn     = module.cdn.cloudfront_distribution_arn
+    }
   }
 
   source_path = [
