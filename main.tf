@@ -26,7 +26,7 @@ module "lambda_at_edge" {
   ]
 
   environment_variables = {
-    USER_POOL_REGION        = data.aws_region.current
+    USER_POOL_REGION        = data.aws_region.current.name
     USER_POOL_ID            = aws_cognito_user_pool.default.id
     USER_POOL_APP_CLIENT_ID = aws_cognito_user_pool_client.default.id
     USER_POOL_DOMAIN        = aws_cognito_user_pool.default.domain
