@@ -98,7 +98,7 @@ module "cdn" {
     s3_bucket = {
       domain_name = module.s3_bucket.s3_bucket_bucket_regional_domain_name
       s3_origin_config = {
-        origin_access_identity = "s3_bucket_one" # key in `origin_access_identities`
+        origin_access_identity = "s3_bucket" # key in `origin_access_identities`
       }
     }
   }
