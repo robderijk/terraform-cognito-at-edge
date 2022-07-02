@@ -117,7 +117,7 @@ module "cdn" {
         },
         {
           name  = "x-user-pool-domain"
-          value = aws_cognito_user_pool.default.domain
+          value = aws_cognito_user_pool_domain.main.domain
         }
       ]
     }
@@ -149,6 +149,11 @@ module "cdn" {
 resource "aws_cognito_user_pool" "default" {
   name                     = "static-hosting-user-pool"
   auto_verified_attributes = ["email"]
+}
+
+resource "aws_cognito_user_pool_domain" "main" {
+  domain       = "static-hosting-user-pool"
+  user_pool_id = aws_cognito_user_pool.default.id
 }
 
 resource "aws_cognito_user_pool_client" "default" {
